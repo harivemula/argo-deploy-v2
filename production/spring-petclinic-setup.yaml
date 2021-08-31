@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: petclinic-setup
+spec:
+  destination:
+    name: ""
+    server: "https://kubernetes.default.svc"
+  source:
+    path: prod
+    repoURL: "https://github.com/harivemula/spring-petclinic-cloud-deploy.git"
+    targetRevision: HEAD
+    directory:
+      recurse: false  ## Only the initial setup files
+  project: spring-petclinic
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
