@@ -1,0 +1,31 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: spring-petclinic
+  destination:
+    name: ''
+    namespace: nginx-ingress
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://kubernetes.github.io/ingress-nginx'
+    targetRevision: 4.0.1
+    chart: ingress-nginx
+    helm:
+      values: |-
+        controller:
+          extraArgs:
+            enable-ssl-passthrough: ""
+        podSecurityPolicy:
+          enabled: true
+      parameters: []
+  syncPolicy:
+    automated: null
+    syncOptions:
+      - CreateNamespace=true
