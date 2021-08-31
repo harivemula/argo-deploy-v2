@@ -13,4 +13,5 @@ resources:
 patchesStrategicMerge:
   - server.yaml
   - repo-server.yaml
+#  - server-service.yaml
 namespace: argocd
